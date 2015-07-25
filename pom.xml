@@ -4,7 +4,7 @@
 
 	<groupId>com.letv</groupId>
 	<artifactId>json2text</artifactId>
-	<version>2.0</version>
+	<version>3.0</version>
 	<packaging>jar</packaging>
 
 	<name>json2text</name>
@@ -71,6 +71,11 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency> 
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

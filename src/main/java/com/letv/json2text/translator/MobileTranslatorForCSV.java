@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.letv.json2text.SuperPhoneInfo;
+import com.letv.json2text.SuperPhoneInfoBase;
+import com.letv.json2text.SuperPhoneInfoOfObjGroupId;
+import com.letv.json2text.util.FormatPhoneInfoUtils;
 
 public class MobileTranslatorForCSV implements Translator{
 	
@@ -20,7 +20,7 @@ public class MobileTranslatorForCSV implements Translator{
 			//production_number,letv_part_number,plan_id,factory_part_number,sale_area,send_time,factory_delivery_time,factory,factory_delivery_id,activation_time,
 			//activation_halfhour_time,status,activation_halfhour_mobile,plan_create_username,plan_create_time,model,group_id,send_username,
 			//godown_entry_id,description
-			SuperPhoneInfo  phoneInfo =  new SuperPhoneInfo();
+			SuperPhoneInfoOfObjGroupId  phoneInfo =  new SuperPhoneInfoOfObjGroupId();
 			//skip csv tile field
 			if(FIELD_TITLE.equals(line)) continue;
 			
@@ -59,7 +59,7 @@ public class MobileTranslatorForCSV implements Translator{
 				
 				
 				if(i==0){
-					SuperPhoneInfo.Id IdObj = new SuperPhoneInfo.Id();
+					SuperPhoneInfoBase.Id IdObj = new SuperPhoneInfoBase.Id();
 					IdObj.set$oid(str);
 					phoneInfo.set_id(IdObj);
 				}else if(i==1){
@@ -121,7 +121,7 @@ public class MobileTranslatorForCSV implements Translator{
 				}else if(i==29){
 					phoneInfo.setModel(str);
 				}else if(i==30){
-					SuperPhoneInfo.GroupId goupIdObj = new SuperPhoneInfo.GroupId();
+					SuperPhoneInfoOfObjGroupId.GroupId goupIdObj = new SuperPhoneInfoOfObjGroupId.GroupId();
 					goupIdObj.set$oid(str);
 					phoneInfo.setGroup_id(goupIdObj);
 				}else if(i==31){
@@ -134,98 +134,13 @@ public class MobileTranslatorForCSV implements Translator{
 					phoneInfo.setExternal_model(str);
 				}
 			}
-			String outstr = formtPhoneInfo(phoneInfo);
+			String outstr = FormatPhoneInfoUtils.formtPhoneInfo(phoneInfo);
 			results.add(outstr);
 			
 		}
 		System.out.println("input:" + lines.size() + ",output:" + results.size());
 		
 		return results;
-	}
-	
-	
-	private  String formtPhoneInfo(SuperPhoneInfo  phoneInfo){
-		String fiedDemi = "\001";
-		StringBuilder sb = new StringBuilder();
-		sb.append(drop_delim(phoneInfo.get_id().get$oid()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getImei()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getImei2()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getSn()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getMeid()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getUi_version()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getSoftware_version()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getHardware_version()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getHead_code()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getMotherboard_code()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getRepair()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getProduct_date()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getShipping_date()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getPcb_sn()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getProduction_number()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getLetv_part_number()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getPlan_id()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getFactory_part_number()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getSale_area()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getSend_time()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getFactory_delivery_time()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getFactory()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getFactory_delivery_id()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getActivation_time()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getActivation_halfhour_time()));
-		sb.append(fiedDemi);
-		/*sb.append(drop_delim(phoneInfo.getFactory_send_date()));
-		sb.append(fiedDemi);*/
-		sb.append(drop_delim(phoneInfo.getStatus()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getActivation_halfhour_mobile()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getPlan_create_username()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getPlan_create_time()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getModel()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getGroup_id()==null?"":phoneInfo.getGroup_id().get$oid()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getSend_username()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getGodown_entry_id()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getDescription()));
-		sb.append(fiedDemi);
-		sb.append(drop_delim(phoneInfo.getExternal_model()));
-		return sb.toString();
-	}
-	
-	public String drop_delim(String str){
-		if(StringUtils.isEmpty(StringUtils.trimToEmpty(str))){
-			return "-";
-		}
-		return str.replaceAll("(\n|\r|\001)+", "");
 	}
 	
 	public static void main(String[] args) {
